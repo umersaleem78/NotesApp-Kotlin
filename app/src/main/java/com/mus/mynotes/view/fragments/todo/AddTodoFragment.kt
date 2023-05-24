@@ -75,11 +75,17 @@ class AddTodoFragment : Fragment() {
         binding?.ivBack?.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding?.ivSave?.setOnClickListener {
+            val items = adapter?.fetchItemsList() ?: arrayListOf()
+            viewModel.todoItemsList = items
+            viewModel.addOrUpdateItem()
+        }
     }
 
     private fun setUpAdapter() {
-        adapter = AddTodoItemAdapter {
-            handleListener()
+        adapter = AddTodoItemAdapter { items ->
+
         }
         binding?.rvTodoItems?.adapter = adapter
         // add new item only if it's not a update request
@@ -88,22 +94,23 @@ class AddTodoFragment : Fragment() {
         }
     }
 
-    private fun handleListener() {
-        adapter?.fetchItemsList()?.let { items ->
-            viewModel.todoItemsList.clear()
-            viewModel.todoItemsList.addAll(items)
-        }
-    }
-
     private fun setUpIntentData() {
         // set data if it's a update request
         viewModel.model?.let { info ->
+            binding?.tvTitle?.text = getString(R.string.update_todo_list)
             viewModel.title = info.title
             viewModel.description = info.description
+            viewModel.color = info.color
             viewModel.model = info
-            viewModel.fetchTodoMainItemModel().item?.let { info.item?.addAll(it) }
+            val addNewItem = viewModel.fetchAddNewItem()
+            if (info.item?.contains(addNewItem) != true) {
+                info.item?.add(addNewItem)
+            }
+            info.item?.let { items ->
+                viewModel.todoItemsList.clear()
+                viewModel.todoItemsList.addAll(items)
+            }
             adapter?.addItems(info.item)
-            binding?.tvTitle?.text = getString(R.string.update_todo_list)
         }
     }
 }

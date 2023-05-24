@@ -30,7 +30,6 @@ class TodoFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("MainClass => on Create")
         registerObservers()
     }
 
@@ -42,14 +41,17 @@ class TodoFragment : Fragment() {
             binding = FragmentTodoBinding.inflate(layoutInflater, container, false)
             registerListeners()
             setUpAdapter()
-            println("MainClass => on Create view")
             viewModel.fetchTodoItemsList()
-       }
+        }
         return binding?.root
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.message.postValue(null)
+    }
+
     private fun registerObservers() {
-        println("MainClass => register Observer")
         viewModel.message.observe(this) {
             AppUtils.showToast(it)
         }
@@ -63,14 +65,19 @@ class TodoFragment : Fragment() {
         }
 
         viewModel.todoItemsListResponse.observe(this) {
-            println("MainClass => todo items response observer")
             if (it.isEmpty()) {
                 binding?.tvNoItemsFound?.show()
             } else {
                 binding?.tvNoItemsFound?.hide()
             }
-            updateTotalItemsCount(it.size)
             todoItemAdapter?.addItems(it)
+            updateTotalItemsCount()
+        }
+
+        viewModel.removeItem.observe(this) {
+            todoItemAdapter?.removeItem(itemClickedPosition)
+            itemClickedPosition = null
+            updateTotalItemsCount()
         }
 
         requireActivity().supportFragmentManager.setFragmentResultListener(
@@ -91,19 +98,19 @@ class TodoFragment : Fragment() {
                     todoItemAdapter?.addItem(info)
                 }
             }
-            // Update total notes size & 'No notes found' status
-            val itemCount = todoItemAdapter?.itemCount ?: 0
-            updateTotalItemsCount(itemCount)
-            if (itemCount > 0) {
-                binding?.tvNoItemsFound?.hide()
-            } else {
-                binding?.tvNoItemsFound?.show()
-            }
+
         }
     }
 
-    private fun updateTotalItemsCount(count: Int) {
-        binding?.tvTotalItems?.text = getString(R.string.total_notes, count)
+    private fun updateTotalItemsCount() {
+        // Update total notes size & 'No notes found' status
+        val itemCount = todoItemAdapter?.itemCount ?: 0
+        if (itemCount > 0) {
+            binding?.tvNoItemsFound?.hide()
+        } else {
+            binding?.tvNoItemsFound?.show()
+        }
+        binding?.tvTotalItems?.text = getString(R.string.total_notes, itemCount)
     }
 
     private fun registerListeners() {

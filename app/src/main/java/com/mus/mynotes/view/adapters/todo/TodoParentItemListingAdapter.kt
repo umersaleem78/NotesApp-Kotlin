@@ -17,6 +17,14 @@ class TodoParentItemListingAdapter(private val callBack: (Boolean, Int, TodoItem
         notifyItemInserted(itemsList.size)
     }
 
+    fun removeItem(position: Int?) {
+        println("MainClass => position => $position")
+        if (position !=null && position <= itemsList.size) {
+            itemsList.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+
     fun updateItem(position: Int?, item: TodoItemMainModel) {
         if (position != null && position < itemsList.size) {
             itemsList[position] = item
@@ -54,7 +62,7 @@ class TodoParentItemListingAdapter(private val callBack: (Boolean, Int, TodoItem
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.clParent.setOnClickListener {
+            binding.ivEdit.setOnClickListener {
                 callBack.invoke(false, absoluteAdapterPosition, itemsList[absoluteAdapterPosition])
             }
 

@@ -13,11 +13,12 @@
         android:background="@color/platinum"
         tools:context=".view.fragments.todo.TodoFragment">
 
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:fontFamily="@font/fira_sans_condensed_medium"
             android:text="@string/my_todo_items"
@@ -56,7 +57,7 @@
             android:fontFamily="@font/fira_sans_condensed_medium"
             android:text="@string/no_todo_items_found"
             android:textColor="@color/lightBlack"
-            android:textSize="@dimen/_25sdp"
+            android:textSize="@dimen/_17sdp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,8 +80,8 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:indeterminateTint="@color/steelBlue"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

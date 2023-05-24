@@ -5,6 +5,8 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:statusBarColor">@color/lightBlack</item>
         <item name="android:fontFamily">@font/roboto_condensed_regular</item>
+        <!-- Added this line, to disable default android 12 splash screen api in android 12+ -->
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="Theme.MyNotes" parent="Base.Theme.MyNotes" />

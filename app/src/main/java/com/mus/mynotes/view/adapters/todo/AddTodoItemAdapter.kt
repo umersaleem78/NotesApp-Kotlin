@@ -14,7 +14,7 @@ import com.mus.mynotes.databinding.ItemTodoBinding
 import com.mus.mynotes.models.todo.TodoItemModel
 import com.mus.mynotes.utils.AppUtils
 
-class AddTodoItemAdapter(private val callBack: () -> Unit?) :
+class AddTodoItemAdapter(private val callBack: (ArrayList<TodoItemModel>) -> Unit?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val itemsList = ArrayList<TodoItemModel>()
@@ -35,6 +35,8 @@ class AddTodoItemAdapter(private val callBack: () -> Unit?) :
             isItemChecked = 1
         }
         itemsList[position].isChecked = isItemChecked
+        //notifyItemChanged(position)
+        callBack.invoke(itemsList)
     }
 
     fun updateItem(
@@ -54,15 +56,15 @@ class AddTodoItemAdapter(private val callBack: () -> Unit?) :
         )
         itemsList[position] = model
         if (triggerNotifyItemChange) {
-            notifyItemChanged(position)
+            //notifyItemChanged(position)
         }
-        callBack.invoke()
+        callBack.invoke(itemsList)
     }
 
     fun removeItem(position: Int) {
         itemsList.removeAt(position)
         notifyItemRemoved(position)
-        callBack.invoke()
+        callBack.invoke(itemsList)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -134,11 +136,6 @@ class AddTodoItemAdapter(private val callBack: () -> Unit?) :
                 removeItem(absoluteAdapterPosition)
             }
 
-            binding.etName.addTextChangedListener {
-                val inputStr = it?.toString() ?: ""
-                updateItem(absoluteAdapterPosition, inputStr, binding.cbSelection.isChecked)
-            }
-
             binding.cbSelection.setOnClickListener {
                 updateCheckBox(absoluteAdapterPosition, binding.cbSelection.isChecked)
             }
@@ -165,6 +162,11 @@ class AddTodoItemAdapter(private val callBack: () -> Unit?) :
                 binding.etName.setText(it)
             }
             binding.cbSelection.isChecked = info.isChecked == 1
+
+            binding.etName.addTextChangedListener {
+                val inputStr = it?.toString() ?: ""
+                updateItem(absoluteAdapterPosition, inputStr, binding.cbSelection.isChecked)
+            }
         }
     }
 }

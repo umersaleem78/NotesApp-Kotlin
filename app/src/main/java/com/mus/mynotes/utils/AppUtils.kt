@@ -27,7 +27,6 @@ object AppUtils {
         list.add("#37a2f4")
         list.add("#fea31a")
         list.add("#d55f70")
-        list.add("#04798d")
         list.add("#4682B4")
         return list
     }

@@ -25,18 +25,20 @@ class TodoItemViewModel @Inject constructor(
 
     var title: String? = null
     var description: String? = null
+    var color: String? = null
     var isUpdateRequest: Boolean = false
     var model: TodoItemMainModel? = null
     var todoItemsList = ArrayList<TodoItemModel>()
 
     var failureMessage: MutableLiveData<String> = MutableLiveData()
     var success: MutableLiveData<TodoItemMainModel> = MutableLiveData()
+    var removeItem: MutableLiveData<Int?> = MutableLiveData()
     var message: MutableLiveData<String> = MutableLiveData()
     var loader: MutableLiveData<Boolean> = MutableLiveData()
     var todoItemsListResponse: MutableLiveData<ArrayList<TodoItemMainModel>> = MutableLiveData()
 
 
-    private fun fetchAddNewItem(): TodoItemModel {
+    fun fetchAddNewItem(): TodoItemModel {
         return TodoItemModel(isAddNewItem = AppConstants.TYPE_ADD_NEW_TODO_ITEM)
     }
 
@@ -49,7 +51,7 @@ class TodoItemViewModel @Inject constructor(
             title = title,
             description = description,
             timestamp = DateTimeUtils.getTimeStamp(),
-            color = AppUtils.getRandomColor(),
+            color = color ?: AppUtils.getRandomColor(),
             item = todoItemsList
         )
     }
@@ -99,8 +101,7 @@ class TodoItemViewModel @Inject constructor(
         if (response == 0) {
             message.postValue(resourceProvider.getString(R.string.unable_to_delete_note))
         } else {
-            message.postValue(resourceProvider.getString(R.string.note_deleted_success))
-            fetchTodoItemsList()
+            removeItem.postValue(id)
         }
     }
 }

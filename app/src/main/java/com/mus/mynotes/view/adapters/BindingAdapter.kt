@@ -2,6 +2,7 @@ package com.mus.mynotes.view.adapters
 
 import android.graphics.Color
 import android.graphics.Paint
+import android.view.View
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
@@ -25,11 +26,15 @@ fun TextView.setTime(timeStamp: String?) {
 }
 
 @BindingAdapter("setBgColor")
-fun CardView.setBgColor(color: String?) {
+fun View.setBgColor(color: String?) {
     if (color.isNullOrEmpty()) {
         return
     }
-    setCardBackgroundColor(Color.parseColor(color))
+    if (this is CardView) {
+        setCardBackgroundColor(Color.parseColor(color))
+    } else {
+        setBackgroundColor(Color.parseColor(color))
+    }
 }
 
 @BindingAdapter("setLineThrough")
