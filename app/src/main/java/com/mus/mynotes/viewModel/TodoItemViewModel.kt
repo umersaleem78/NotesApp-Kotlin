@@ -89,7 +89,7 @@ class TodoItemViewModel @Inject constructor(
         Handler(Looper.getMainLooper()).postDelayed({
             loader.postValue(false)
             todoItemsListResponse.postValue(response as ArrayList<TodoItemMainModel>?)
-        }, 500)
+        }, 200)
     }
 
     fun deleteTodoItem(id: Int?) = viewModelScope.launch {

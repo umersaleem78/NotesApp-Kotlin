@@ -98,7 +98,7 @@ class TodoFragment : Fragment() {
                     todoItemAdapter?.addItem(info)
                 }
             }
-
+            updateTotalItemsCount()
         }
     }
 
