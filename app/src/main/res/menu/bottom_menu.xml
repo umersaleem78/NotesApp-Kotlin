@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="@string/home"
+        android:checked="true"
+        app:iconTint="@color/platinum"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/todoFragment"
+        android:icon="@drawable/ic_baseline_checklist_rtl_24"
+        android:title="@string/todo"
+        app:iconTint="@color/platinum"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings"
+        app:iconTint="@color/platinum"
+        app:showAsAction="ifRoom" />
+
+</menu>

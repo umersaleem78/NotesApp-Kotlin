@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.mus.mynotes.models.todo.TodoItemModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/cbSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{model.isChecked() == 0 ? false : true}"
+            android:clickable="false"
+            android:minWidth="0dp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:minHeight="0dp"
+            app:buttonTint="@color/steelBlue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tlName"
+            setLineThrough="@{model.isChecked()}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:fontFamily="@font/fira_sans_condensed_medium"
+            android:text="@{model.title}"
+            app:layout_constraintBottom_toBottomOf="@id/cbSelection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cbSelection"
+            app:layout_constraintTop_toTopOf="@id/cbSelection" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
